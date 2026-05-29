@@ -1,60 +1,69 @@
-# 🎬 Catálogo de Filmes - Sistema de Gerenciamento
+# 🎬 Catálogo de Filmes
 
-Um sistema console desenvolvido em C# para gerenciar um catálogo de filmes com informações detalhadas, plataformas de streaming e estatísticas dinâmicas.
+Sistema console completo em C# para gerenciar um catálogo de filmes com persistência em JSON, suporte a múltiplas plataformas de streaming, pesquisa avançada e estatísticas detalhadas.
 
 ## 📋 Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Estrutura do Código](#estrutura-do-código)
+- [Estrutura do Projeto](#estrutura-do-projeto)
 - [Como Executar](#como-executar)
+- [Credenciais de Acesso](#credenciais-de-acesso)
+- [Funcionalidades Detalhadas](#funcionalidades-detalhadas)
 - [Exemplo de Saída](#exemplo-de-saída)
-- [Conceitos Abordados](#conceitos-abordados)
-- [Melhorias Futuras](#melhorias-futuras)
+- [Estrutura JSON](#estrutura-json)
+- [Diagrama de Classes](#diagrama-de-classes)
 - [Licença](#licença)
 
 ---
 
 ## 🎯 Sobre o Projeto
 
-O **Catálogo de Filmes** é uma aplicação console que demonstra conceitos fundamentais de Programação Orientada a Objetos (POO) em C#. O sistema permite:
+O **Catálogo de Filmes** é uma aplicação console que demonstra conceitos avançados de Programação Orientada a Objetos (POO) em C#, com persistência de dados em JSON e sistema de login diferenciado. O sistema permite:
 
-- Cadastrar filmes com informações completas
-- Adicionar plataformas de streaming para cada filme
-- Visualizar detalhes dos filmes de forma organizada
-- Gerar estatísticas automáticas sobre o catálogo
-- Adicionar novos filmes dinamicamente com atualização instantânea das estatísticas
+- Gerenciar filmes com informações completas
+- Adicionar múltiplas plataformas de streaming com URLs
+- Persistência automática em arquivos JSON
+- Pesquisa avançada por título, gênero, ano, classificação e plataforma
+- Estatísticas detalhadas do catálogo
+- Sistema de login com perfis de usuário e administrador
 
 ### Objetivos Educacionais
-Este projeto foi desenvolvido para demonstrar:
-- ✅ Uso de classes e objetos
+Este projeto demonstra:
+- ✅ Classes, objetos e construtores
 - ✅ Encapsulamento e abstração
 - ✅ Coleções genéricas (List, HashSet)
-- ✅ Consultas LINQ
-- ✅ Métodos de instância vs métodos estáticos
+- ✅ LINQ (GroupBy, Where, Select, Average)
+- ✅ Persistência com JSON (Newtonsoft.Json)
+- ✅ Sistema de autenticação
+- ✅ Tratamento de exceções
 - ✅ Boas práticas de programação
 
 ---
 
 ## ✨ Funcionalidades
 
-### Gerenciamento de Filmes
-- **Cadastro Completo**: Título, ano, gênero, duração, sinopse e classificação indicativa
-- **Múltiplas Plataformas**: Suporte para adicionar várias plataformas de streaming por filme
-- **Exibição Detalhada**: Visualização formatada com emojis e caracteres especiais
+### 👤 Usuário Comum (sem login)
+- **Ver todos os filmes**: Listagem completa com detalhes
+- **Pesquisar filmes**: Por título, gênero, ano ou classificação
+- **Buscar por plataforma**: Ver todos os filmes disponíveis em uma plataforma específica
+- **Estatísticas**: Visualizar dados agregados do catálogo
 
-### Estatísticas Dinâmicas
-O sistema calcula automaticamente:
-- 📊 **Total de filmes** no catálogo
-- 📺 **Plataformas únicas** disponíveis (sem duplicatas)
-- 🎭 **Distribuição por gênero**
-- 🔞 **Distribuição por classificação indicativa**
+### 👑 Administrador (login necessário)
+- **Todas as funcionalidades do usuário**
+- **Adicionar filmes**: Cadastro completo com plataformas e URLs
+- **Remover filmes**: Exclusão por seleção numérica
+- **Persistência automática**: Dados salvos em JSON
+- **Ver todos os filmes**: Listagem com detalhes completos
+- **Estatísticas**: Análise detalhada do catálogo
 
-### Características Técnicas
-- **Atualização em Tempo Real**: Estatísticas recalculadas após cada operação
-- **Prevenção de Duplicatas**: HashSet garante plataformas únicas
-- **Interface Visual**: Formatação com caracteres especiais e emojis
+### 📊 Funcionalidades Técnicas
+- **Persistência em JSON**: Dados salvos em arquivos separados (filmes.json, usuarios.json)
+- **Atualização em tempo real**: Estatísticas recalculadas automaticamente
+- **Interface visual**: Formatação com linhas e organização clara
+- **Validações**: Tratamento de entradas inválidas
+- **Sistema de navegação**: Menus intuitivos com opção de retorno
 
 ---
 
@@ -62,295 +71,310 @@ O sistema calcula automaticamente:
 
 | Tecnologia | Versão | Finalidade |
 |------------|--------|------------|
-| **.NET** | 6.0 ou superior | Framework de desenvolvimento |
+| **.NET** | 10.0+ | Framework de desenvolvimento |
 | **C#** | 10.0+ | Linguagem de programação |
-| **LINQ** | - | Consultas e manipulação de coleções |
-| **Console Application** | - | Interface de usuário |
+| **Newtonsoft.Json** | 13.0.4 | Serialização/Deserialização JSON |
+| **LINQ** | - | Consultas em coleções |
 
-### Namespaces Utilizados
-```csharp
-using System;              // Funcionalidades básicas (Console, etc.)
-using System.Collections.Generic;  // Coleções genéricas (List<T>, HashSet<T>)
-using System.Linq;         // Consultas LINQ (GroupBy, etc.)
+### Package Instalado
+```bash
+dotnet add package Newtonsoft.Json
 ```
 
 ---
 
-## 📁 Estrutura do Código
+## 📁 Estrutura do Projeto
 
 ```
-📁 CatalogoFilmes/
+CatalogoFilmesFinal/
 │
-├── 🎬 Filme.cs
-│   ├── Atributos
-│   │   ├── Titulo, Ano, Genero, Duracao
-│   │   ├── Sinopse, Classificacao
-│   │   └── Plataforma (List<string>)
-│   ├── Construtor: Inicializa um novo filme
-│   ├── ExibirInformacao(): Mostra detalhes do filme
-│   └── AdicionarPlataforma(): Adiciona streaming
+├── Program.cs                 # Código fonte principal
+├── CatalogoFilmesFinal.csproj # Arquivo de projeto
+├── filmes.json                # Banco de dados de filmes (criado automaticamente)
+├── usuarios.json              # Banco de dados de usuários (criado automaticamente)
 │
-├── 📚 Catalogo.cs
-│   ├── Atributos: filmes (List<Filme>)
-│   ├── AdicionarFilme(): Insere filme no catálogo
-│   ├── ObterTodosFilmes(): Retorna lista completa
-│   ├── ObterTotalFilmes(): Calcula quantidade
-│   ├── ObterPlataformasUnicas(): Retorna plataformas sem repetição
-│   └── ExibirEstatisticas(): Gera relatórios
-│
-└── 🚀 Program.cs
-    └── Main(): Ponto de entrada
-        ├── Cria instância do catálogo
-        ├── Cadastra 3 filmes de exemplo
-        ├── Exibe filmes e estatísticas
-        ├── Demonstra cadastro dinâmico
-        └── Exibe estatísticas atualizadas
+└── README.md                  # Documentação
 ```
+
+### Classes do Sistema
+
+| Classe | Responsabilidade |
+|--------|------------------|
+| **Filme** | Modelo de dados do filme |
+| **Usuario** | Modelo de dados do usuário |
+| **CatalogoManager** | Gerencia operações do catálogo |
+| **Program** | Interface e fluxo do programa |
 
 ---
 
 ## 🚀 Como Executar
 
 ### Pré-requisitos
-- [.NET SDK 6.0 ou superior](https://dotnet.microsoft.com/download)
-- Editor de código (Visual Studio, VS Code, Rider, etc.)
+- [.NET SDK 8.0 ou superior](https://dotnet.microsoft.com/download)
+- Visual Studio Code (recomendado) ou qualquer editor de código
 
 ### Passo a Passo
 
 #### 1. Criar um novo projeto
 ```bash
-dotnet new console -n CatalogoFilmes
-cd CatalogoFilmes
+dotnet new console -n CatalogoFilmesFinal
+cd CatalogoFilmesFinal
 ```
 
-#### 2. Substituir o conteúdo do Program.cs
-Copie todo o código fornecido e cole no arquivo `Program.cs`
+#### 2. Adicionar o pacote Newtonsoft.Json
+```bash
+dotnet add package Newtonsoft.Json
+```
 
-#### 3. Executar o projeto
+#### 3. Substituir o conteúdo do arquivo Program.cs
+Copie o código fonte fornecido e cole no arquivo `Program.cs`
+
+#### 4. Executar o projeto
 ```bash
 dotnet run
 ```
 
-### Alternativa - Compilação Manual
-```bash
-# Windows
-csc Program.cs
-Program.exe
-
-# Linux/Mac (com Mono)
-mcs Program.cs
-mono Program.exe
+### Estrutura do csproj
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+</Project>
 ```
+
+---
+
+## 🔐 Credenciais de Acesso
+
+| Perfil | Usuário | Senha | Acesso |
+|--------|---------|-------|--------|
+| **Administrador** | `admin` | `admin123` | Total (CRUD) |
+| **Usuário Comum** | `visitante` | (vazio) | Apenas leitura |
+
+---
+
+## 📖 Funcionalidades Detalhadas
+
+### Menu Principal
+```
+════════════════════════════════════════════════════════════
+CATALOGO DE FILMES
+════════════════════════════════════════════════════════════
+
+SELECIONE O PERFIL:
+
+1 - USUARIO (Pesquisar filmes)
+2 - ADMINISTRADOR (Gerenciar catalogo)
+3 - SAIR
+```
+
+### Menu do Usuário
+| Opção | Funcionalidade |
+|-------|----------------|
+| 1 | Ver todos os filmes (detalhado) |
+| 2 | Pesquisar filmes (título, gênero, ano, classificação) |
+| 3 | Ver filmes por plataforma |
+| 4 | Ver estatísticas do catálogo |
+| 0 | Voltar ao menu principal |
+
+### Menu do Administrador
+| Opção | Funcionalidade |
+|-------|----------------|
+| 1 | Adicionar novo filme |
+| 2 | Remover filme (por número) |
+| 3 | Ver todos os filmes |
+| 4 | Ver estatísticas |
+| 0 | Voltar ao menu principal |
+
+### Pesquisa Avançada
+- **Por título**: Busca parcial (case insensitive)
+- **Por gênero**: Filtra por categoria
+- **Por ano**: Filmes de um ano específico
+- **Por classificação**: Livre, 12 anos, 14 anos, 16 anos, 18 anos
+
+### Busca por Plataforma
+1. Exibe lista de plataformas disponíveis
+2. Usuário seleciona uma plataforma
+3. Mostra todos os filmes com links diretos
 
 ---
 
 ## 📺 Exemplo de Saída
 
 ```
-════════════════════════════════════════════════════════════
-🎬 SISTEMA DE CATÁLOGO DE FILMES 🎬
-════════════════════════════════════════════════════════════
+============================================================
+TODOS OS FILMES CADASTRADOS
+============================================================
 
-✅ Filme 'Matrix' adicionado com sucesso!
-✅ Filme 'Toy Story' adicionado com sucesso!
-✅ Filme 'O Poderoso Chefão' adicionado com sucesso!
+============================================================
+MATRIX (1999)
+------------------------------------------------------------
+Genero: Acao/Ficcao Cientifica
+Duracao: 136 minutos
+Classificacao: 14 anos
+Sinopse: Um programador descobre que a realidade e uma simulacao
 
-════════════════════════════════════════════════════════════
-📋 EXIBINDO FILMES CADASTRADOS
-════════════════════════════════════════════════════════════
+Onde assistir:
+   - Netflix: https://netflix.com/matrix
+   - Prime Video: https://primevideo.com/matrix
+============================================================
 
-╔════════════════════════════════╗
-║ MATRIX ║
-╚════════════════════════════════╝
-📅 Ano de Lançamento: 1999
-🎭 Genero: Ação/Ficção científica
-⏱️ Duração: 136 minutos
-🔞 Classificação Indicativa: 14 anos
-📝 Sinopse: Um programador descobre que a realidade é uma simulação...
+============================================================
+ESTATISTICAS DO CATALOGO
+============================================================
 
-📺 Plataformas de Streaming:
-   1. Netflix
-   2. Prime Video
-   3. HBO Max
+Total de filmes: 20
+Plataformas disponiveis: Netflix, Prime Video, Disney+, HBO Max, Paramount+
+Total de plataformas: 5
 
-————————————————————————————————
+Filmes por genero:
+   - Acao/Ficcao Cientifica: 2 filme(s)
+   - Animacao/Aventura: 2 filme(s)
+   - Drama/Crime: 2 filme(s)
 
-╔════════════════════════════════╗
-║ TOY STORY ║
-╚════════════════════════════════╝
-📅 Ano de Lançamento: 1995
-🎭 Genero: Infantil/Comédia
-⏱️ Duração: 81 minutos
-🔞 Classificação Indicativa: Livre
-📝 Sinopse: O aniversário do garoto Andy está chegando...
-
-📺 Plataformas de Streaming:
-   1. Disney+
-
-————————————————————————————————
-
-[continuação dos demais filmes...]
-
-📊 ESTATÍSTICAS DO CATÁLOGO:
-🎬 Total de filmes: 3
-📺 Plataformas disponíveis: Netflix, Prime Video, HBO Max, Disney+, Paramount+
-   Total de plataformas: 5
-
-🎭 Filmes por gênero:
-   • Ação/Ficção científica: 1 filme(s)
-   • Infantil/Comédia: 1 filme(s)
-   • Crime/Ficção policial: 1 filme(s)
-
-🔞 Filmes por classificação indicativa:
-   • 14 anos: 2 filme(s)
-   • Livre: 1 filme(s)
+Duracao media: 139 minutos
+Filme mais longo: O Poderoso Chefao (175 min)
+Filme mais curto: Toy Story (81 min)
 ```
 
 ---
 
-## 📚 Conceitos Abordados
+## 📦 Estrutura JSON
 
-### 1. Programação Orientada a Objetos (POO)
-
-| Conceito | Implementação |
-|----------|--------------|
-| **Classe** | `Filme` e `Catalogo` definem modelos |
-| **Objeto** | `filme1`, `filme2`, `filme3` são instâncias |
-| **Atributos** | Características como `Titulo`, `Ano` |
-| **Métodos** | Comportamentos como `ExibirInformacao()` |
-| **Construtor** | `public Filme(...)` inicializa objetos |
-| **Encapsulamento** | Atributos `public` (simplificado) |
-| **Abstração** | Classes representam conceitos do mundo real |
-
-### 2. Coleções e Estruturas de Dados
-
-```csharp
-// Lista dinâmica - permite crescimento automático
-public List<string> Plataforma;
-
-// HashSet - garante elementos únicos
-var plataformasUnicas = new HashSet<string>();
+### filmes.json
+```json
+[
+  {
+    "Titulo": "Matrix",
+    "Ano": 1999,
+    "Genero": "Acao/Ficcao Cientifica",
+    "Duracao": 136,
+    "Sinopse": "Um programador descobre que a realidade e uma simulacao.",
+    "ClassificacaoIndicativa": "14 anos",
+    "Plataformas": [
+      "Netflix|https://netflix.com/matrix",
+      "Prime Video|https://primevideo.com/matrix"
+    ]
+  }
+]
 ```
 
-### 3. LINQ (Language Integrated Query)
-
-```csharp
-// Agrupa filmes por gênero
-var generosAgrupados = filmes.GroupBy(f => f.Genero);
-
-// Conta elementos em cada grupo
-grupo.Count()
-
-// Junta strings com separador
-string.Join(", ", plataformasUnicas)
+### usuarios.json
+```json
+[
+  {
+    "Nome": "admin",
+    "Senha": "admin123",
+    "Tipo": "Admin"
+  },
+  {
+    "Nome": "visitante",
+    "Senha": "",
+    "Tipo": "Comum"
+  }
+]
 ```
-
-### 4. Métodos e Parâmetros
-
-| Tipo | Exemplo | Descrição |
-|------|---------|----------|
-| **Método de instância** | `filme.ExibirInformacao()` | Precisa de um objeto |
-| **Método estático** | `Program.Main()` | Chamado pela classe |
-| **Parâmetros** | `(string plataforma)` | Recebe dados |
-| **Retorno** | `List<Filme>` | Retorna coleção |
-
-### 5. Iterações e Loops
-
-```csharp
-// foreach - percorre coleções
-foreach (var filme in filmes)
-{
-    filme.ExibirInformacao();
-}
-
-// for - percorre com índice
-for (int i = 0; i < Plataforma.Count; i++)
-{
-    Console.WriteLine($"   {i + 1}. {Plataforma[i]}");
-}
-```
-
----
-
-## 🔧 Melhorias Futuras
-
-### Funcionalidades
-- [ ] **Persistência de Dados**: Salvar em JSON, XML ou banco de dados
-- [ ] **Interface de Menu**: Menu interativo com opções
-- [ ] **Pesquisa Avançada**: Buscar por múltiplos critérios
-- [ ] **Edição/Remoção**: Modificar ou excluir filmes existentes
-- [ ] **Avaliações**: Adicionar notas e comentários dos usuários
-- [ ] **Ordenação**: Ordenar por título, ano, etc.
-
-### Experiência do Usuário
-- [ ] **Cores no Console**: Destacar informações importantes
-- [ ] **Validações**: Tratar entradas inválidas
-- [ ] **Paginação**: Para catálogos grandes
-- [ ] **Confirmações**: Antes de operações críticas
-
-### Técnicas
-- [ ] **Propriedades**: Substituir atributos públicos por propriedades com get/set
-- [ ] **Tratamento de Exceções**: try-catch para erros
-- [ ] **Interfaces**: Implementar `ICatalogo` para abstração
-- [ ] **Testes Unitários**: Garantir funcionamento correto
-- [ ] **Documentação XML**: Comentários de documentação
 
 ---
 
 ## 📊 Diagrama de Classes
 
 ```
-┌─────────────────────────┐
-│        Filme            │
-├─────────────────────────┤
-│ + Titulo: string        │
-│ + Ano: int              │
-│ + Genero: string        │
-│ + Duracao: int          │
-│ + Sinopse: string       │
-│ + Classificacao: string │
-│ + Plataforma: List<string>│
-├─────────────────────────┤
-│ + Filme(...)            │
-│ + ExibirInformacao()    │
-│ + AdicionarPlataforma() │
-└─────────────────────────┘
-           ↑
-           │ usa
-           │
-┌─────────────────────────┐
-│       Catalogo          │
-├─────────────────────────┤
-│ - filmes: List<Filme>   │
-├─────────────────────────┤
-│ + AdicionarFilme()      │
-│ + ObterTodosFilmes()    │
-│ + ObterTotalFilmes()    │
-│ + ObterPlataformasUnicas()│
-│ + ExibirEstatisticas()  │
-└─────────────────────────┘
-           ↑
-           │ cria
-           │
-┌─────────────────────────┐
-│        Program          │
-├─────────────────────────┤
-│ + Main()                │
-└─────────────────────────┘
+┌─────────────────────────────────────────┐
+│                Filme                     │
+├─────────────────────────────────────────┤
+│ + Titulo: string                        │
+│ + Ano: int                              │
+│ + Genero: string                        │
+│ + Duracao: int                          │
+│ + Sinopse: string                       │
+│ + ClassificacaoIndicativa: string       │
+│ + Plataformas: List<string>             │
+├─────────────────────────────────────────┤
+│ + Filme(titulo, ano, ...)               │
+│ + AdicionarPlataforma(plataforma, url)  │
+│ + ExibirDetalhes()                      │
+│ + ExibirResumo(indice)                  │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│               Usuario                    │
+├─────────────────────────────────────────┤
+│ + Nome: string                          │
+│ + Senha: string                         │
+│ + Tipo: string                          │
+├─────────────────────────────────────────┤
+│ + Usuario(nome, senha, tipo)            │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│           CatalogoManager                │
+├─────────────────────────────────────────┤
+│ - filmes: List<Filme>                   │
+│ - usuarios: List<Usuario>               │
+├─────────────────────────────────────────┤
+│ + CatalogoManager()                     │
+│ + FazerLogin(nome, senha)               │
+│ + AdicionarFilme()                      │
+│ + RemoverFilme()                        │
+│ + ListarTodosFilmes()                   │
+│ + PesquisarFilmes()                     │
+│ + PesquisarPorPlataforma()              │
+│ + ExibirEstatisticas()                  │
+└─────────────────────────────────────────┘
+
+┌─────────────────────────────────────────┐
+│               Program                    │
+├─────────────────────────────────────────┤
+│ - manager: CatalogoManager              │
+│ - usuarioLogado: Usuario                │
+├─────────────────────────────────────────┤
+│ + Main()                                │
+│ + MenuUsuario()                         │
+│ + MenuLoginAdmin()                      │
+│ + MenuAdministrador()                   │
+└─────────────────────────────────────────┘
+```
+## 📚 Conceitos Demonstrados
+
+### 1. Programação Orientada a Objetos
+| Conceito | Implementação |
+|----------|--------------|
+| Classe | `Filme`, `Usuario`, `CatalogoManager` |
+| Objeto | Instâncias criadas no programa |
+| Encapsulamento | Propriedades privadas com métodos públicos |
+| Abstração | Modelagem de entidades reais |
+| Construtor | Inicialização de objetos |
+
+### 2. LINQ em Ação
+```csharp
+// Pesquisa
+resultados = filmes.Where(f => f.Titulo.ToLower().Contains(busca)).ToList();
+
+// Agrupamento
+var generosAgrupados = filmes.GroupBy(f => f.Genero);
+
+// Agregação
+double duracaoMedia = filmes.Average(f => f.Duracao);
 ```
 
----
+### 3. Persistência com JSON
+```csharp
+// Salvar
+string json = JsonConvert.SerializeObject(filmes, Formatting.Indented);
+File.WriteAllText(ARQUIVO_FILMES, json);
 
-## 🎓 Aprendizados
-
-Este projeto demonstra:
-
-1. **Orientação a Objetos**: Modelagem de entidades do mundo real
-2. **Organização de Código**: Separação de responsabilidades
-3. **Manipulação de Coleções**: Uso eficiente de List e HashSet
-4. **Consultas com LINQ**: Agrupamento e análise de dados
-5. **Interface com Usuário**: Saída formatada no console
-6. **Código Dinâmico**: Estatísticas que se atualizam automaticamente
+// Carregar
+string json = File.ReadAllText(ARQUIVO_FILMES);
+filmes = JsonConvert.DeserializeObject<List<Filme>>(json);
+```
 
 ---
 
@@ -362,25 +386,19 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 Autor
 
-**Seu Nome** - [seu-email@exemplo.com](mailto:seu-email@exemplo.com)
-
-Link do Projeto: [https://github.com/seu-usuario/catalogo-filmes](https://github.com/seu-usuario/catalogo-filmes)
+Projeto desenvolvido para fins educacionais, demonstrando conceitos de POO, LINQ, JSON e arquitetura de software em C#.
 
 ---
 
-## 🙏 Agradecimentos
+## ⭐ Considerações Finais
 
-- Microsoft pelo .NET Framework
-- Comunidade C# pelo suporte e documentação
-- Criadores dos emojis utilizados na interface
+Este projeto demonstra na prática como construir uma aplicação console profissional em C#, com:
 
----
+- ✅ Código limpo e organizado
+- ✅ Separação de responsabilidades
+- ✅ Persistência de dados
+- ✅ Sistema de autenticação
+- ✅ Funcionalidades completas de CRUD
+- ✅ Interface amigável
 
-## ⭐ Avaliação
-
-Se este projeto foi útil para seu aprendizado, considere:
-- Dar uma ⭐ no repositório
-- Compartilhar com outros estudantes
-- Fazer um fork e melhorar o código
-
----
+**Divirta-se explorando o código!** 🎬
