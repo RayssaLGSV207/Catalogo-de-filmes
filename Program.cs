@@ -6,16 +6,17 @@ using Newtonsoft.Json;
 
 namespace CatalogoFilmesConsole
 {
-    // Classe Filme
-    public class Filme
+    // Classe Filme - Selada pois representa apenas uma entidade de dados final
+    public sealed class Filme
     {
-        public string Titulo { get; set; }
-        public int Ano { get; set; }
-        public string Genero { get; set; }
-        public int Duracao { get; set; }
-        public string Sinopse { get; set; }
-        public string ClassificacaoIndicativa { get; set; }
-        public List<string> Plataformas { get; set; }
+        // Encapsulamento: Setters privados ou init para garantir imutabilidade onde faz sentido
+        public string Titulo { get; private set; }
+        public int Ano { get; init; }
+        public string Genero { get; private set; }
+        public int Duracao { get; init; }
+        public string Sinopse { get; private set; }
+        public string ClassificacaoIndicativa { get; private set; }
+        public List<string> Plataformas { get; private set; }
 
         public Filme(string titulo, int ano, string genero, int duracao, string sinopse, string classificacao)
         {
@@ -30,49 +31,50 @@ namespace CatalogoFilmesConsole
 
         public void AdicionarPlataforma(string plataforma, string url)
         {
-            Plataformas.Add($"{plataforma}|{url}");
+            if (!string.IsNullOrWhiteSpace(plataforma))
+            {
+                Plataformas.Add($"{plataforma.Trim()}|{(string.IsNullOrWhiteSpace(url) ? "#" : url.Trim())}");
+            }
         }
 
         public void ExibirDetalhes()
         {
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ExibirDivisor('=', 60);
             Console.WriteLine($"{Titulo.ToUpper()} ({Ano})");
-            Console.WriteLine(new string('-', 60));
-            Console.WriteLine($"Genero: {Genero}");
-            Console.WriteLine($"Duracao: {Duracao} minutos");
-            Console.WriteLine($"Classificacao: {ClassificacaoIndicativa}");
+            ConsoleHelper.ExibirDivisor('-', 60);
+            Console.WriteLine($"Gênero: {Genero}");
+            Console.WriteLine($"Duração: {Duracao} minutos");
+            Console.WriteLine($"Classificação: {ClassificacaoIndicativa}");
             Console.WriteLine($"Sinopse: {Sinopse}");
-            Console.WriteLine($"\nOnde assistir:");
+            Console.WriteLine("\nOnde assistir:");
             
             if (Plataformas.Count > 0)
             {
                 foreach (var plataforma in Plataformas)
                 {
                     string[] partes = plataforma.Split('|');
-                    string nome = partes[0];
-                    string url = partes.Length > 1 ? partes[1] : "#";
-                    Console.WriteLine($"   - {nome}: {url}");
+                    Console.WriteLine($"   - {partes[0]}: {partes[1]}");
                 }
             }
             else
             {
                 Console.WriteLine("   Nenhuma plataforma cadastrada");
             }
-            Console.WriteLine(new string('=', 60) + "\n");
+            ConsoleHelper.ExibirDivisor('=', 60);
+            Console.WriteLine();
         }
 
-        public void ExibirResumo(int indice)
-        {
+        // C# Moderno: Expression-bodied member
+        public void ExibirResumo(int indice) => 
             Console.WriteLine($"[{indice}] {Titulo} ({Ano}) - {Genero}");
-        }
     }
 
-    // Classe Usuario
-    public class Usuario
+    // Classe Usuario - Selada para segurança e performance
+    public sealed class Usuario
     {
-        public string Nome { get; set; }
-        public string Senha { get; set; }
-        public string Tipo { get; set; }
+        public string Nome { get; init; }
+        public string Senha { get; init; }
+        public string Tipo { get; init; }
 
         public Usuario(string nome, string senha, string tipo)
         {
@@ -82,8 +84,35 @@ namespace CatalogoFilmesConsole
         }
     }
 
-    // Gerenciador do Catalogo
-    public class CatalogoManager
+    // ConsoleHelper: Classe estática aplicando DRY para centralizar formatações de tela repetitivas
+    public static class ConsoleHelper
+    {
+        public static void ExibirDivisor(char caractere, int tamanho) => 
+            Console.WriteLine(new string(caractere, tamanho));
+
+        public static void ConfigurarTela(string titulo)
+        {
+            Console.Clear();
+            ExibirDivisor('=', 60);
+            Console.WriteLine(titulo.ToUpper());
+            ExibirDivisor('=', 60);
+        }
+
+        public static void AguardarTecla()
+        {
+            Console.WriteLine("\nPressione qualquer tecla para continuar...");
+            Console.ReadKey();
+        }
+
+        public static void MostrarErro(string mensagem)
+        {
+            Console.WriteLine($"\n[ERRO] {mensagem}");
+            AguardarTecla();
+        }
+    }
+
+    // Gerenciador do Catálogo - Selado
+    public sealed class CatalogoManager
     {
         private const string ARQUIVO_FILMES = "filmes.json";
         private const string ARQUIVO_USUARIOS = "usuarios.json";
@@ -113,22 +142,14 @@ namespace CatalogoFilmesConsole
 
         private void CarregarFilmesExemplo()
         {
-            var filme1 = new Filme("Matrix", 1999, "Acao/Ficcao Cientifica", 136,
-                "Um programador descobre que a realidade e uma simulacao e luta contra as maquinas.", "14 anos");
+            var filme1 = new Filme("Matrix", 1999, "Ação/Ficção Científica", 136, "Um programador descobre que a realidade é uma simulação...", "14 anos");
             filme1.AdicionarPlataforma("Netflix", "https://netflix.com/matrix");
             filme1.AdicionarPlataforma("Prime Video", "https://primevideo.com/matrix");
             filmes.Add(filme1);
 
-            var filme2 = new Filme("Toy Story", 1995, "Animacao/Aventura", 81,
-                "Brinquedos ganham vida quando os humanos nao estao por perto.", "Livre");
+            var filme2 = new Filme("Toy Story", 1995, "Animação/Aventura", 81, "Brinquedos ganham vida quando os humanos não estão por perto.", "Livre");
             filme2.AdicionarPlataforma("Disney+", "https://disneyplus.com/toystory");
             filmes.Add(filme2);
-
-            var filme3 = new Filme("O Poderoso Chefao", 1972, "Drama/Crime", 175,
-                "A historia da familia mafiosa Corleone.", "16 anos");
-            filme3.AdicionarPlataforma("Prime Video", "https://primevideo.com/godfather");
-            filme3.AdicionarPlataforma("Paramount+", "https://paramountplus.com/godfather");
-            filmes.Add(filme3);
         }
 
         private void CarregarUsuarios()
@@ -140,102 +161,82 @@ namespace CatalogoFilmesConsole
             }
             else
             {
-                usuarios = new List<Usuario>();
-                usuarios.Add(new Usuario("admin", "admin123", "Admin"));
-                usuarios.Add(new Usuario("visitante", "", "Comum"));
+                usuarios = new List<Usuario>
+                {
+                    new Usuario("admin", "admin123", "Admin"),
+                    new Usuario("visitante", "", "Comum")
+                };
                 SalvarUsuarios();
             }
         }
 
-        private void SalvarFilmes()
-        {
-            string json = JsonConvert.SerializeObject(filmes, Formatting.Indented);
-            File.WriteAllText(ARQUIVO_FILMES, json);
-        }
+        private void SalvarFilmes() => File.WriteAllText(ARQUIVO_FILMES, JsonConvert.SerializeObject(filmes, Formatting.Indented));
+        private void SalvarUsuarios() => File.WriteAllText(ARQUIVO_USUARIOS, JsonConvert.SerializeObject(usuarios, Formatting.Indented));
 
-        private void SalvarUsuarios()
-        {
-            string json = JsonConvert.SerializeObject(usuarios, Formatting.Indented);
-            File.WriteAllText(ARQUIVO_USUARIOS, json);
-        }
-
-        public Usuario FazerLogin(string nome, string senha)
-        {
-            return usuarios.FirstOrDefault(u => u.Nome == nome && u.Senha == senha);
-        }
-
-        public List<Filme> ObterTodosFilmes()
-        {
-            return filmes;
-        }
+        public Usuario FazerLogin(string nome, string senha) => 
+            usuarios.FirstOrDefault(u => u.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase) && u.Senha == senha);
 
         public void AdicionarFilme()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("CADASTRO DE NOVO FILME");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Cadastro de Novo Filme");
 
-            Console.Write("\nTitulo: ");
+            Console.Write("\nTítulo: ");
             string titulo = Console.ReadLine();
 
-            Console.Write("Ano de Lancamento: ");
-            int ano = int.Parse(Console.ReadLine());
+            // Proteção contra entradas inválidas (Evita que o programa quebre)
+            int ano;
+            while (!int.TryParse(ObterEntradaObrigatoria("Ano de Lançamento: "), out ano)) 
+                Console.WriteLine("Por favor, digite um ano válido.");
 
-            Console.Write("Genero: ");
+            Console.Write("Gênero: ");
             string genero = Console.ReadLine();
 
-            Console.Write("Duracao (minutos): ");
-            int duracao = int.Parse(Console.ReadLine());
+            int duracao;
+            while (!int.TryParse(ObterEntradaObrigatoria("Duração (minutos): "), out duracao)) 
+                Console.WriteLine("Por favor, digite uma duração válida.");
 
             Console.Write("Sinopse: ");
             string sinopse = Console.ReadLine();
 
-            Console.Write("Classificacao Indicativa: ");
+            Console.Write("Classificação Indicativa: ");
             string classificacao = Console.ReadLine();
 
             Filme novoFilme = new Filme(titulo, ano, genero, duracao, sinopse, classificacao);
 
             Console.WriteLine("\n--- ADICIONAR PLATAFORMAS DE STREAMING ---");
-            bool continuar = true;
-            while (continuar)
+            while (true)
             {
                 Console.Write("Nome da Plataforma (ou 'sair' para finalizar): ");
                 string nomePlataforma = Console.ReadLine();
 
-                if (nomePlataforma.ToLower() == "sair")
-                    break;
+                if (nomePlataforma?.ToLower() == "sair") break;
 
                 Console.Write($"URL para assistir {titulo} no {nomePlataforma}: ");
                 string urlPlataforma = Console.ReadLine();
 
-                if (!string.IsNullOrEmpty(nomePlataforma))
-                {
-                    novoFilme.AdicionarPlataforma(nomePlataforma, urlPlataforma);
-                }
-
-                Console.Write("\nDeseja adicionar outra plataforma? (s/n): ");
-                continuar = Console.ReadLine().ToLower() == "s";
+                novoFilme.AdicionarPlataforma(nomePlataforma, urlPlataforma);
+                Console.WriteLine("Plataforma adicionada!");
             }
 
             filmes.Add(novoFilme);
             SalvarFilmes();
             Console.WriteLine("\nFilme cadastrado com sucesso!");
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
+        }
+
+        private string ObterEntradaObrigatoria(string texto)
+        {
+            Console.Write(texto);
+            return Console.ReadLine();
         }
 
         public void RemoverFilme()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("REMOVER UM FILME");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Remover um Filme");
 
-            if (filmes.Count == 0)
+            if (!filmes.Any())
             {
-                Console.WriteLine("\nNenhum filme cadastrado para remover.\n");
-                Console.ReadKey();
+                ConsoleHelper.MostrarErro("Nenhum filme cadastrado para remover.");
                 return;
             }
 
@@ -245,7 +246,7 @@ namespace CatalogoFilmesConsole
                 filmes[i].ExibirResumo(i + 1);
             }
 
-            Console.Write("\nDigite o numero do filme que deseja remover: ");
+            Console.Write("\nDigite o número do filme que deseja remover: ");
             if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= filmes.Count)
             {
                 Filme removido = filmes[index - 1];
@@ -255,231 +256,164 @@ namespace CatalogoFilmesConsole
             }
             else
             {
-                Console.WriteLine("\nNumero invalido.");
+                ConsoleHelper.MostrarErro("Número inválido.");
+                return;
             }
 
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
         }
 
         public void ListarTodosFilmes()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("TODOS OS FILMES CADASTRADOS");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Todos os Filmes Cadastrados");
 
-            if (filmes.Count == 0)
+            if (!filmes.Any())
             {
                 Console.WriteLine("\nNenhum filme cadastrado ainda.\n");
             }
             else
             {
-                foreach (var filme in filmes)
-                {
-                    filme.ExibirDetalhes();
-                }
+                filmes.ForEach(f => f.ExibirDetalhes());
             }
 
             Console.WriteLine($"Total de filmes: {filmes.Count}");
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
         }
 
         public void PesquisarFilmes()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("PESQUISAR FILMES");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Pesquisar Filmes");
 
             Console.WriteLine("\nPesquisar por:");
-            Console.WriteLine("1 - Titulo");
-            Console.WriteLine("2 - Genero");
-            Console.WriteLine("3 - Ano de Lancamento");
-            Console.WriteLine("4 - Classificacao Indicativa");
-            Console.WriteLine("0 - Voltar");
-            Console.Write("\nOpcao: ");
+            Console.WriteLine("1 - Título\n2 - Gênero\n3 - Ano de Lançamento\n4 - Classificação Indicativa\n0 - Voltar");
+            Console.Write("\nOpção: ");
 
             string opcao = Console.ReadLine();
-            List<Filme> resultados = new List<Filme>();
-
-            switch (opcao)
+            List<Filme> resultados = string.Empty switch
             {
-                case "1":
-                    Console.Write("\nDigite o Titulo: ");
-                    string tituloBusca = Console.ReadLine().ToLower();
-                    resultados = filmes.Where(f => f.Titulo.ToLower().Contains(tituloBusca)).ToList();
-                    break;
-                case "2":
-                    Console.Write("\nDigite o Genero: ");
-                    string generoBusca = Console.ReadLine().ToLower();
-                    resultados = filmes.Where(f => f.Genero.ToLower().Contains(generoBusca)).ToList();
-                    break;
-                case "3":
-                    Console.Write("\nDigite o ano: ");
-                    if (int.TryParse(Console.ReadLine(), out int anoBusca))
-                        resultados = filmes.Where(f => f.Ano == anoBusca).ToList();
-                    else
-                        Console.WriteLine("\nAno invalido.");
-                    break;
-                case "4":
-                    Console.Write("\nDigite a classificacao: ");
-                    string classBusca = Console.ReadLine().ToLower();
-                    resultados = filmes.Where(f => f.ClassificacaoIndicativa.ToLower().Contains(classBusca)).ToList();
-                    break;
-                case "0":
-                    return;
-                default:
-                    Console.WriteLine("\nOpcao invalida!");
-                    Console.ReadKey();
-                    return;
-            }
+                _ when opcao == "1" => BuscarPorTexto("Título", f => f.Titulo),
+                _ when opcao == "2" => BuscarPorTexto("Gênero", f => f.Genero),
+                _ when opcao == "3" => BuscarPorAno(),
+                _ when opcao == "4" => BuscarPorTexto("Classificação", f => f.ClassificacaoIndicativa),
+                _ => null
+            };
+
+            if (opcao == "0") return;
+            if (resultados == null) { ConsoleHelper.MostrarErro("Opção inválida!"); return; }
 
             ExibirResultadosPesquisa(resultados);
         }
 
+        private List<Filme> BuscarPorTexto(string campo, Func<Filme, string> seletor)
+        {
+            Console.Write($"\nDigite o {campo}: ");
+            string busca = Console.ReadLine()?.ToLower() ?? "";
+            return filmes.Where(f => seletor(f).ToLower().Contains(busca)).ToList();
+        }
+
+        private List<Filme> BuscarPorAno()
+        {
+            Console.Write("\nDigite o ano: ");
+            if (int.TryParse(Console.ReadLine(), out int anoBusca))
+                return filmes.Where(f => f.Ano == anoBusca).ToList();
+            
+            Console.WriteLine("\nAno inválido.");
+            return new List<Filme>();
+        }
+
         public void PesquisarPorPlataforma()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("PESQUISAR POR PLATAFORMA");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Pesquisar por Plataforma");
 
-            var plataformasDisponiveis = new HashSet<string>();
-            foreach (var filme in filmes)
-            {
-                foreach (var plataforma in filme.Plataformas)
-                {
-                    string nomePlataforma = plataforma.Split('|')[0].Trim();
-                    plataformasDisponiveis.Add(nomePlataforma);
-                }
-            }
+            var plataformasDisponiveis = filmes.SelectMany(f => f.Plataformas)
+                                               .Select(p => p.Split('|')[0].Trim())
+                                               .Distinct()
+                                               .ToList();
 
-            if (plataformasDisponiveis.Count == 0)
+            if (!plataformasDisponiveis.Any())
             {
-                Console.WriteLine("\nNenhuma plataforma cadastrada ainda.");
-                Console.ReadKey();
+                ConsoleHelper.MostrarErro("Nenhuma plataforma cadastrada ainda.");
                 return;
             }
 
-            Console.WriteLine("\nPlataformas Disponiveis:");
-            var listaPlataformas = plataformasDisponiveis.ToList();
-            for (int i = 0; i < listaPlataformas.Count; i++)
+            Console.WriteLine("\nPlataformas Disponíveis:");
+            for (int i = 0; i < plataformasDisponiveis.Count; i++)
             {
-                Console.WriteLine($"[{i + 1}] {listaPlataformas[i]}");
+                Console.WriteLine($"[{i + 1}] {plataformasDisponiveis[i]}");
             }
 
-            Console.Write("\nDigite o numero da plataforma: ");
-            if (int.TryParse(Console.ReadLine(), out int escolha) && escolha > 0 && escolha <= listaPlataformas.Count)
+            Console.Write("\nDigite o número da plataforma: ");
+            if (int.TryParse(Console.ReadLine(), out int escolha) && escolha > 0 && escolha <= plataformasDisponiveis.Count)
             {
-                string plataformaEscolhida = listaPlataformas[escolha - 1];
-                var filmesNaPlataforma = filmes
-                    .Where(f => f.Plataformas.Any(p => p.Split('|')[0] == plataformaEscolhida))
-                    .ToList();
+                string plataformaEscolhida = plataformasDisponiveis[escolha - 1];
+                var filmesNaPlataforma = filmes.Where(f => f.Plataformas.Any(p => p.Split('|')[0] == plataformaEscolhida)).ToList();
 
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine($"FILMES DISPONIVEIS NA {plataformaEscolhida.ToUpper()}");
-                Console.WriteLine(new string('=', 60));
-
-                if (filmesNaPlataforma.Count == 0)
-                {
-                    Console.WriteLine($"\nNenhum filme encontrado na plataforma {plataformaEscolhida}.");
-                }
-                else
-                {
-                    foreach (var filme in filmesNaPlataforma)
-                    {
-                        filme.ExibirDetalhes();
-                    }
-                }
+                ConsoleHelper.ConfigurarTela($"Filmes disponíveis na {plataformaEscolhida}");
+                filmesNaPlataforma.ForEach(f => f.ExibirDetalhes());
             }
             else
             {
-                Console.WriteLine("\nNumero invalido!");
+                ConsoleHelper.MostrarErro("Número inválido!");
+                return;
             }
 
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
         }
 
         public void ExibirEstatisticas()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("ESTATISTICAS DO CATALOGO");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Estatísticas do Catálogo");
 
             Console.WriteLine($"\nTotal de filmes: {filmes.Count}");
 
-            var plataformasUnicas = filmes.SelectMany(f => f.Plataformas)
-                .Select(p => p.Split('|')[0])
-                .Distinct()
-                .ToList();
-            Console.WriteLine($"Plataformas disponiveis: {string.Join(", ", plataformasUnicas)}");
+            var plataformasUnicas = filmes.SelectMany(f => f.Plataformas).Select(p => p.Split('|')[0]).Distinct().ToList();
+            Console.WriteLine($"Plataformas disponíveis: {string.Join(", ", plataformasUnicas)}");
             Console.WriteLine($"Total de plataformas: {plataformasUnicas.Count}");
 
-            Console.WriteLine("\nFilmes por genero:");
-            var generosAgrupados = filmes.GroupBy(f => f.Genero);
-            foreach (var grupo in generosAgrupados)
-            {
-                Console.WriteLine($"   - {grupo.Key}: {grupo.Count()} filme(s)");
-            }
-
-            Console.WriteLine("\nFilmes por classificacao:");
-            var classificacoesAgrupadas = filmes.GroupBy(f => f.ClassificacaoIndicativa);
-            foreach (var grupo in classificacoesAgrupadas)
-            {
-                Console.WriteLine($"   - {grupo.Key}: {grupo.Count()} filme(s)");
-            }
+            ExibirAgrupamento("Filmes por gênero:", f => f.Genero);
+            ExibirAgrupamento("Filmes por classificação:", f => f.ClassificacaoIndicativa);
 
             if (filmes.Any())
             {
-                double duracaoMedia = filmes.Average(f => f.Duracao);
-                Console.WriteLine($"\nDuracao media: {duracaoMedia:F0} minutos");
-                
-                var filmeMaisLongo = filmes.OrderByDescending(f => f.Duracao).First();
-                Console.WriteLine($"Filme mais longo: {filmeMaisLongo.Titulo} ({filmeMaisLongo.Duracao} min)");
-                
-                var filmeMaisCurto = filmes.OrderBy(f => f.Duracao).First();
-                Console.WriteLine($"Filme mais curto: {filmeMaisCurto.Titulo} ({filmeMaisCurto.Duracao} min)");
+                Console.WriteLine($"\nDuração média: {filmes.Average(f => f.Duracao):F0} minutos");
+                Console.WriteLine($"Filme mais longo: {filmes.OrderByDescending(f => f.Duracao).First().Titulo}");
+                Console.WriteLine($"Filme mais curto: {filmes.OrderBy(f => f.Duracao).First().Titulo}");
             }
 
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
+        }
+
+        private void ExibirAgrupamento(string titulo, Func<Filme, string> propriedade)
+        {
+            Console.WriteLine($"\n{titulo}");
+            var agrupado = filmes.GroupBy(propriedade);
+            foreach (var grupo in agrupado)
+            {
+                Console.WriteLine($"   - {grupo.Key}: {grupo.Count()} filme(s)");
+            }
         }
 
         private void ExibirResultadosPesquisa(List<Filme> resultados)
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("RESULTADOS DA PESQUISA");
-            Console.WriteLine(new string('=', 60));
-
-            if (resultados.Count == 0)
+            ConsoleHelper.ConfigurarTela("Resultados da Pesquisa");
+            if (!resultados.Any())
             {
                 Console.WriteLine("\nNenhum filme encontrado.\n");
             }
             else
             {
                 Console.WriteLine($"\nEncontrados {resultados.Count} filme(s):\n");
-                foreach (var filme in resultados)
-                {
-                    filme.ExibirDetalhes();
-                }
+                resultados.ForEach(f => f.ExibirDetalhes());
             }
-
-            Console.WriteLine("\nPressione qualquer tecla para continuar...");
-            Console.ReadKey();
+            ConsoleHelper.AguardarTecla();
         }
     }
 
     // Programa Principal
     class Program
     {
-        static CatalogoManager manager;
-        static Usuario usuarioLogado;
+        private static CatalogoManager manager;
+        private static Usuario usuarioLogado;
 
         static void Main(string[] args)
         {
@@ -487,45 +421,26 @@ namespace CatalogoFilmesConsole
 
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("CATALOGO DE FILMES");
-                Console.WriteLine(new string('=', 60));
+                ConsoleHelper.ConfigurarTela("Catálogo de Filmes");
                 Console.WriteLine("\nSELECIONE O PERFIL:\n");
-                Console.WriteLine("1 - USUARIO (Pesquisar filmes)");
-                Console.WriteLine("2 - ADMINISTRADOR (Gerenciar catalogo)");
-                Console.WriteLine("3 - SAIR");
-                Console.Write("\nOpcao: ");
+                Console.WriteLine("1 - USUÁRIO (Pesquisar filmes)\n2 - ADMINISTRADOR (Gerenciar catálogo)\n3 - SAIR");
+                Console.Write("\nOpção: ");
 
-                string opcao = Console.ReadLine();
-
-                switch (opcao)
+                switch (Console.ReadLine())
                 {
-                    case "1":
-                        MenuUsuario();
-                        break;
-                    case "2":
-                        MenuLoginAdmin();
-                        break;
-                    case "3":
-                        Console.WriteLine("\nPrograma encerrado!");
-                        return;
-                    default:
-                        Console.WriteLine("\nOpcao invalida!");
-                        Console.ReadKey();
-                        break;
+                    case "1": MenuUsuario(); break;
+                    case "2": MenuLoginAdmin(); break;
+                    case "3": Console.WriteLine("\nPrograma encerrado!"); return;
+                    default: ConsoleHelper.MostrarErro("Opção inválida!"); break;
                 }
             }
         }
 
         static void MenuLoginAdmin()
         {
-            Console.Clear();
-            Console.WriteLine(new string('=', 60));
-            Console.WriteLine("LOGIN ADMINISTRADOR");
-            Console.WriteLine(new string('=', 60));
+            ConsoleHelper.ConfigurarTela("Login Administrador");
 
-            Console.Write("\nUsuario: ");
+            Console.Write("\nUsuário: ");
             string nome = Console.ReadLine();
 
             Console.Write("Senha: ");
@@ -533,26 +448,16 @@ namespace CatalogoFilmesConsole
 
             usuarioLogado = manager.FazerLogin(nome, senha);
 
-            if (usuarioLogado != null && usuarioLogado.Tipo == "Admin")
+            if (usuarioLogado?.Tipo == "Admin")
             {
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine($"Bem-vindo, {usuarioLogado.Nome}!");
-                Console.WriteLine(new string('=', 60));
+                ConsoleHelper.ConfigurarTela($"Bem-vindo, {usuarioLogado.Nome}!");
                 Console.WriteLine("\nAcesso concedido ao painel administrativo.");
-                Console.WriteLine("\nPressione qualquer tecla para continuar...");
-                Console.ReadKey();
+                ConsoleHelper.AguardarTecla();
                 MenuAdministrador();
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("ERRO DE LOGIN");
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("\nUsuario ou senha invalidos!");
-                Console.WriteLine("\nPressione qualquer tecla para tentar novamente...");
-                Console.ReadKey();
+                ConsoleHelper.MostrarErro("Usuário ou senha inválidos!");
             }
         }
 
@@ -560,39 +465,18 @@ namespace CatalogoFilmesConsole
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("MENU DO USUARIO");
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("\n1 - Ver todos os filmes");
-                Console.WriteLine("2 - Pesquisar filmes");
-                Console.WriteLine("3 - Ver filmes por plataforma");
-                Console.WriteLine("4 - Ver estatisticas");
-                Console.WriteLine("0 - Voltar");
-                Console.Write("\nOpcao: ");
+                ConsoleHelper.ConfigurarTela("Menu do Usuário");
+                Console.WriteLine("\n1 - Ver todos os filmes\n2 - Pesquisar filmes\n3 - Ver filmes por plataforma\n4 - Ver estatísticas\n0 - Voltar");
+                Console.Write("\nOpção: ");
 
-                string opcao = Console.ReadLine();
-
-                switch (opcao)
+                switch (Console.ReadLine())
                 {
-                    case "1":
-                        manager.ListarTodosFilmes();
-                        break;
-                    case "2":
-                        manager.PesquisarFilmes();
-                        break;
-                    case "3":
-                        manager.PesquisarPorPlataforma();
-                        break;
-                    case "4":
-                        manager.ExibirEstatisticas();
-                        break;
-                    case "0":
-                        return;
-                    default:
-                        Console.WriteLine("\nOpcao invalida!");
-                        Console.ReadKey();
-                        break;
+                    case "1": manager.ListarTodosFilmes(); break;
+                    case "2": manager.PesquisarFilmes(); break;
+                    case "3": manager.PesquisarPorPlataforma(); break;
+                    case "4": manager.ExibirEstatisticas(); break;
+                    case "0": return;
+                    default: ConsoleHelper.MostrarErro("Opção inválida!"); break;
                 }
             }
         }
@@ -601,40 +485,18 @@ namespace CatalogoFilmesConsole
         {
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine($"MENU ADMINISTRADOR - Bem-vindo, {usuarioLogado.Nome}");
-                Console.WriteLine(new string('=', 60));
-                Console.WriteLine("\n1 - Adicionar novo filme");
-                Console.WriteLine("2 - Remover filme");
-                Console.WriteLine("3 - Ver todos os filmes");
-                Console.WriteLine("4 - Ver estatisticas");
-                Console.WriteLine("0 - Voltar");
-                Console.Write("\nOpcao: ");
+                ConsoleHelper.ConfigurarTela($"Menu Administrador - {usuarioLogado.Nome}");
+                Console.WriteLine("\n1 - Adicionar novo filme\n2 - Remover filme\n3 - Ver todos os filmes\n4 - Ver estatísticas\n0 - Voltar");
+                Console.Write("\nOpção: ");
 
-                string opcao = Console.ReadLine();
-
-                switch (opcao)
+                switch (Console.ReadLine())
                 {
-                    case "1":
-                        manager.AdicionarFilme();
-                        break;
-                    case "2":
-                        manager.RemoverFilme();
-                        break;
-                    case "3":
-                        manager.ListarTodosFilmes();
-                        break;
-                    case "4":
-                        manager.ExibirEstatisticas();
-                        break;
-                    case "0":
-                        usuarioLogado = null;
-                        return;
-                    default:
-                        Console.WriteLine("\nOpcao invalida!");
-                        Console.ReadKey();
-                        break;
+                    case "1": manager.AdicionarFilme(); break;
+                    case "2": manager.RemoverFilme(); break;
+                    case "3": manager.ListarTodosFilmes(); break;
+                    case "4": manager.ExibirEstatisticas(); break;
+                    case "0": usuarioLogado = null; return;
+                    default: ConsoleHelper.MostrarErro("Opção inválida!"); break;
                 }
             }
         }
