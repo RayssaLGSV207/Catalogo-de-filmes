@@ -5,10 +5,11 @@
     "Genero": "Acao/Ficcao Cientifica",
     "Duracao": 136,
     "Sinopse": "Um programador descobre que a realidade e uma simulacao e luta contra as maquinas.",
-    "ClassificacaoIndicativa": "14 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/matrix",
-      "Prime Video|https://primevideo.com/matrix"
+      "Netflix|https://www.netflix.com/br/title/20557937?source=35&fromWatch=true",
+      "Prime Video|https://www.primevideo.com/dp/amzn1.dv.gti.dea9f6b7-e0a0-38c9-7467-d6079c6fb4f0?autoplay=0&ref_=atv_cf_strg_wb",
+      "HBO Max|https://www.hbomax.com/br/pt/movies/matrix/012cacbd-5893-4379-b7a6-d3737c61d4b5?utm_source=universal_search"
     ]
   },
   {
@@ -17,9 +18,9 @@
     "Genero": "Animacao/Aventura",
     "Duracao": 81,
     "Sinopse": "Brinquedos ganham vida quando os humanos nao estao por perto.",
-    "ClassificacaoIndicativa": "Livre",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Disney+|https://disneyplus.com/toystory"
+      "Disney+|https://www.disneyplus.com/pt-br/browse/entity-f6174ebf-cb92-453c-a52b-62bb3576e402"
     ]
   },
   {
@@ -28,34 +29,34 @@
     "Genero": "Drama/Crime",
     "Duracao": 175,
     "Sinopse": "A historia da familia mafiosa Corleone.",
-    "ClassificacaoIndicativa": "16 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Prime Video|https://primevideo.com/godfather",
-      "Paramount+|https://paramountplus.com/godfather"
+      "Apple TV|https://tv.apple.com/br/movie/o-poderoso-chefao/umc.cmc.3ew9fykdnpfaq9t2jq5da011c",
+      "Paramount+|https://www.paramountplus.com/br/movies/video/gUufhVPlJy5i5HLTbS8li1LruEeMH_3x/"
     ]
   },
   {
-    "Titulo": "Inception",
+    "Titulo": "A Origem",
     "Ano": 2010,
     "Genero": "Ficcao Cientifica/Suspense",
     "Duracao": 148,
     "Sinopse": "Um ladrao que invade sonhos recebe a missao de plantar uma ideia na mente de um herdeiro.",
-    "ClassificacaoIndicativa": "14 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/inception",
-      "HBO Max|https://hbomax.com/inception"
+      "Netflix|https://www.netflix.com/br/title/70131314",
+      "Apple TV|https://tv.apple.com/br/movie/a-origem/umc.cmc.6loas01ow0w4lkatxxloz7a6e"
     ]
   },
   {
-    "Titulo": "The Dark Knight",
+    "Titulo": "Batman: O Cavaleiro das Trevas",
     "Ano": 2008,
     "Genero": "Acao/Crime",
     "Duracao": 152,
     "Sinopse": "Batman enfrenta o Coringa, um criminoso que quer mergulhar Gotham City no caos.",
-    "ClassificacaoIndicativa": "14 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "HBO Max|https://hbomax.com/darkknight",
-      "Prime Video|https://primevideo.com/darkknight"
+      "Netflix|https://www.netflix.com/br/title/70079583",
+      "Prime Video|https://www.primevideo.com/-/pt/detail/0JKQMPWCE3RTK5TFZCSIC3H7XO"
     ]
   },
   {
@@ -64,22 +65,20 @@
     "Genero": "Drama/Suspense",
     "Duracao": 132,
     "Sinopse": "Uma familia pobre se infiltra na casa de uma familia rica, desencadeando uma serie de eventos inesperados.",
-    "ClassificacaoIndicativa": "16 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/parasita",
-      "Disney+|https://disneyplus.com/parasita"
-    ]
+      "Prime Video|https://www.primevideo.com/-/pt/detail/0N5M5HFKM1A1FG79PIB3KODXI0",
+      "Prime Video|https://www.primevideo.com/-/pt/detail/0N5M5HFKM1A1FG79PIB3KODXI0"    ]
   },
   {
-    "Titulo": "Whiplash",
+    "Titulo": "Whiplash: Em Busca da Perfeição",
     "Ano": 2014,
     "Genero": "Drama/Musical",
     "Duracao": 107,
     "Sinopse": "Um jovem baterista de jazz enfrenta um professor rigoroso que usa metodos extremos para extrair o melhor de seus alunos.",
-    "ClassificacaoIndicativa": "14 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/whiplash",
-      "Prime Video|https://primevideo.com/whiplash"
+      "Prime Video|https://www.primevideo.com/-/pt/detail/0MJAY4UYEYALCLVT11M7CL64I9"
     ]
   },
   {
@@ -88,11 +87,10 @@
     "Genero": "Animacao/Acao",
     "Duracao": 117,
     "Sinopse": "Miles Morales se torna o Homem-Aranha e se une a outras versoes do heroi de diferentes dimensoes.",
-    "ClassificacaoIndicativa": "Livre",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/spiderverse",
-      "Disney+|https://disneyplus.com/spiderverse",
-      "Prime Video|https://primevideo.com/spiderverse"
+      "Netflix|https://www.netflix.com/br/title/81002747",
+      "Prime Video|https://www.primevideo.com/-/pt/detail/0MEEZSHBU5UU7SBB8J9K33HE4Z"
     ]
   },
   {
@@ -101,10 +99,9 @@
     "Genero": "Ficcao Cientifica/Aventura",
     "Duracao": 169,
     "Sinopse": "Com a humanidade a beira da extincao, um grupo de astronautas viaja por um buraco de minhoca em busca de outro planeta habitavel.",
-    "ClassificacaoIndicativa": "12 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "HBO Max|https://hbomax.com/interstellar",
-      "Prime Video|https://primevideo.com/interstellar"
+      "Netflix|https://www.netflix.com/br/title/70305903"
     ]
   },
   {
@@ -113,10 +110,9 @@
     "Genero": "Drama/Suspense",
     "Duracao": 139,
     "Sinopse": "Um funcionario de escritorio entediado forma um clube de luta com um vendedor de sabao, que se transforma em um movimento revolucionario.",
-    "ClassificacaoIndicativa": "18 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Prime Video|https://primevideo.com/fightclub",
-      "Paramount+|https://paramountplus.com/fightclub"
+      "Disney+|https://www.disneyplus.com/pt-br"
     ]
   },
   {
@@ -125,9 +121,9 @@
     "Genero": "Acao/Drama",
     "Duracao": 155,
     "Sinopse": "Um general romano traido se torna gladiador e busca vinganca contra o imperador que matou sua familia.",
-    "ClassificacaoIndicativa": "16 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
-      "Netflix|https://netflix.com/gladiator",
+      "Globoplay|https://globoplay.globo.com/gladiador/t/5kWsWvjrnh/",
       "Paramount+|https://paramountplus.com/gladiator"
     ]
   },
@@ -137,7 +133,7 @@
     "Genero": "Drama/Comedia",
     "Duracao": 142,
     "Sinopse": "Um homem com QI abaixo da media testemunha e influencia varios eventos historicos dos Estados Unidos.",
-    "ClassificacaoIndicativa": "12 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Netflix|https://netflix.com/forrestgump",
       "Prime Video|https://primevideo.com/forrestgump"
@@ -149,7 +145,7 @@
     "Genero": "Crime/Drama",
     "Duracao": 154,
     "Sinopse": "Historias interligadas de gângsteres, boxeadores e criminosos em Los Angeles.",
-    "ClassificacaoIndicativa": "18 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Prime Video|https://primevideo.com/pulpfiction",
       "Paramount+|https://paramountplus.com/pulpfiction"
@@ -161,7 +157,7 @@
     "Genero": "Animacao/Aventura",
     "Duracao": 88,
     "Sinopse": "Um leao jovem foge de casa apos a morte de seu pai, mas retorna para reivindicar seu trono.",
-    "ClassificacaoIndicativa": "Livre",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Disney+|https://disneyplus.com/lionking"
     ]
@@ -172,7 +168,7 @@
     "Genero": "Ficcao Cientifica/Aventura",
     "Duracao": 162,
     "Sinopse": "Um paraplégico e enviado a Pandora para se infiltrar nos nativos, mas acaba se apaixonando pela cultura deles.",
-    "ClassificacaoIndicativa": "12 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Disney+|https://disneyplus.com/avatar",
       "HBO Max|https://hbomax.com/avatar"
@@ -184,7 +180,7 @@
     "Genero": "Crime/Drama",
     "Duracao": 130,
     "Sinopse": "A historia do crescimento do crime na Cidade de Deus, um conjunto habitacional do Rio de Janeiro.",
-    "ClassificacaoIndicativa": "18 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Netflix|https://netflix.com/cidadededeus",
       "Prime Video|https://primevideo.com/cidadededeus"
@@ -196,7 +192,7 @@
     "Genero": "Terror/Suspense",
     "Duracao": 146,
     "Sinopse": "Um escritor aceita um emprego como zelador de um hotel isolado, onde a loucura e o sobrenatural tomam conta.",
-    "ClassificacaoIndicativa": "18 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "HBO Max|https://hbomax.com/shining",
       "Prime Video|https://primevideo.com/shining"
@@ -208,7 +204,7 @@
     "Genero": "Musical/Romance",
     "Duracao": 128,
     "Sinopse": "Um pianista de jazz e uma atriz se apaixonam enquanto perseguem seus sonhos em Los Angeles.",
-    "ClassificacaoIndicativa": "12 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Netflix|https://netflix.com/lalaland",
       "Prime Video|https://primevideo.com/lalaland"
@@ -220,7 +216,7 @@
     "Genero": "Acao/Aventura",
     "Duracao": 120,
     "Sinopse": "Em um mundo apocaliptico, Max se une a uma imperatriz rebelde para fugir de um tirano.",
-    "ClassificacaoIndicativa": "16 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "HBO Max|https://hbomax.com/madmax",
       "Prime Video|https://primevideo.com/madmax"
@@ -232,7 +228,7 @@
     "Genero": "Terror/Suspense",
     "Duracao": 104,
     "Sinopse": "Um jovem negro visita a familia de sua namorada branca e descobre segredos perturbadores.",
-    "ClassificacaoIndicativa": "16 anos",
+    "ClassificacaoIndicativa": null,
     "Plataformas": [
       "Prime Video|https://primevideo.com/getout",
       "Netflix|https://netflix.com/getout"
